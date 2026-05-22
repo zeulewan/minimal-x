@@ -5,7 +5,9 @@ export const KeyTopicsButton = "topicsButton";
 export const KeyXPremiumButton = "xPremiumButton";
 export const KeyVerifiedOrgsButton = "verifiedOrgsButton";
 export const KeyGrokButton = "grokButton";
+export const KeyFollowingButton = "followingButton";
 export const KeyFollowingTimeline = "followingTimeline";
+export const KeyHideForYouTimeline = "hideForYouTimeline";
 export const KeyTrendsHomeTimeline = "trendsHomeTimeline";
 export const KeyRemoveTimelineTabs = "removeTimelineTabs";
 export const KeyTimelineWidth = "timelineWidth";
@@ -18,6 +20,7 @@ export const KeyExploreButton = "exploreButton";
 export const KeyNotificationsButton = "notificationsButton";
 export const KeyMessagesButton = "messagesButton";
 export const KeyBookmarksButton = "bookmarksButton";
+export const KeyMoreButton = "moreButton";
 export const KeyCreatorStudioButton = "creatorStudioButton";
 export const KeyJobsButton = "jobsButton";
 export const KeyArticlesButton = "articles";
@@ -54,6 +57,7 @@ export const allSettingsKeys = [
   KeyRemoveTweetBorders,
   KeyStickyHeader,
   KeyFollowingTimeline,
+  KeyHideForYouTimeline,
   KeyHideViewCount,
   KeyRecentMedia,
   KeyTrendsHomeTimeline,
@@ -87,10 +91,12 @@ export const allSettingsKeys = [
   KeyNotificationsButton,
   KeyMessagesButton,
   KeyGrokButton,
+  KeyFollowingButton,
   KeyCreatorStudioButton,
   KeyXPremiumButton,
   KeyListsButton,
   KeyBookmarksButton,
+  KeyMoreButton,
   KeyJobsButton,
   KeyCommunitiesButton,
   KeyArticlesButton,
@@ -115,6 +121,7 @@ export const defaultPreferences = {
   [KeyRemoveTweetBorders]: "off",
   [KeyStickyHeader]: "on",
   [KeyFollowingTimeline]: "off",
+  [KeyHideForYouTimeline]: "off",
   [KeyHideViewCount]: "off",
   [KeyRecentMedia]: "off",
   [KeyTrendsHomeTimeline]: "off",
@@ -148,10 +155,12 @@ export const defaultPreferences = {
   [KeyNotificationsButton]: "on",
   [KeyMessagesButton]: "on",
   [KeyGrokButton]: "on",
+  [KeyFollowingButton]: "on",
   [KeyCreatorStudioButton]: "on",
   [KeyXPremiumButton]: "off",
   [KeyListsButton]: "on",
   [KeyBookmarksButton]: "on",
+  [KeyMoreButton]: "on",
   [KeyJobsButton]: "off",
   [KeyCommunitiesButton]: "on",
   [KeyArticlesButton]: "off",

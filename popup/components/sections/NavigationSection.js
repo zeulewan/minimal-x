@@ -7,6 +7,7 @@ import {
   KeyCommunitiesButton,
   KeyCreatorStudioButton,
   KeyExploreButton,
+  KeyFollowingButton,
   KeyGrokButton,
   KeyHideGrokDrawer,
   KeyHideMessagesDrawer,
@@ -14,6 +15,7 @@ import {
   KeyJobsButton,
   KeyListsButton,
   KeyMessagesButton,
+  KeyMoreButton,
   KeyNavigationButtonsLabels,
   KeyNavigationCenter,
   KeyNotificationsButton,
@@ -100,11 +102,29 @@ const Messages = () => (
   </IconButton>
 );
 
+const Following = () => (
+  <IconButton storageKey={KeyFollowingButton} label="Following">
+    <path
+      className="fill-current"
+      d="M12 11.5A4.75 4.75 0 1012 2a4.75 4.75 0 000 9.5zM9.25 6.75a2.75 2.75 0 115.5 0 2.75 2.75 0 01-5.5 0zM4.5 21.5h15l-.18-1.16C18.74 16.58 16.04 14 12 14s-6.74 2.58-7.32 6.34L4.5 21.5zm2.43-2c.75-2.25 2.5-3.5 5.07-3.5s4.32 1.25 5.07 3.5H6.93z"
+    />
+  </IconButton>
+);
+
 const Bookmarks = () => (
   <IconButton storageKey={KeyBookmarksButton} label="Bookmarks">
     <path
       className="fill-current"
       d="M4 4.5A2.5 2.5 0 016.5 2h11A2.5 2.5 0 0120 4.5v18.44l-8-5.71-8 5.71V4.5zM6.5 4c-.276 0-.5.22-.5.5v14.56l6-4.29 6 4.29V4.5c0-.28-.224-.5-.5-.5h-11z"
+    />
+  </IconButton>
+);
+
+const More = () => (
+  <IconButton storageKey={KeyMoreButton} label="More">
+    <path
+      className="fill-current"
+      d="M3.75 12a2.25 2.25 0 114.5 0 2.25 2.25 0 01-4.5 0zm6 0a2.25 2.25 0 114.5 0 2.25 2.25 0 01-4.5 0zm6 0a2.25 2.25 0 114.5 0 2.25 2.25 0 01-4.5 0z"
     />
   </IconButton>
 );
@@ -217,8 +237,10 @@ const NavigationSection = () => {
             <Explore />
             <Notifications />
             <Messages />
+            <Following />
             <Grok />
             <Bookmarks />
+            <More />
             <CreatorStudio />
             <XPremium />
             <Lists />

@@ -14,18 +14,20 @@ selectors.sidebarLinks = {
   explore: `${selectors.leftSidebar} [data-testid="AppTabBar_Explore_Link"]`,
   notifications: `${selectors.leftSidebar} [data-testid="AppTabBar_Notifications_Link"]`,
   messages: `${selectors.leftSidebar} [data-testid="AppTabBar_DirectMessage_Link"]`,
-  bookmarks: `${selectors.leftSidebar} a[href*="bookmarks"]`,
-  creatorStudio: `${selectors.leftSidebar} a[href*="/i/jf/creators/studio"][role="link"][aria-label]`,
-  jobs: `${selectors.leftSidebar} a[href*="jobs"]`,
-  articles: 'a[href="/compose/articles"]',
+  following: `${selectors.leftSidebar} [data-testid*="Following"], ${selectors.leftSidebar} [aria-label="Following"][role="link"], ${selectors.leftSidebar} a[href*="/following"][role="link"][aria-label], ${selectors.leftSidebar} a[href*="/i/verified-choose"][role="link"][aria-label]`,
+  bookmarks: `${selectors.leftSidebar} [data-testid="AppTabBar_Bookmarks_Link"], ${selectors.leftSidebar} a[href*="bookmarks"]`,
+  more: `${selectors.leftSidebar} [data-testid="AppTabBar_More_Menu"], ${selectors.leftSidebar} [aria-label="More"][role="button"], ${selectors.leftSidebar} [aria-label="More menu items"][role="button"]`,
+  creatorStudio: `${selectors.leftSidebar} [data-testid*="Creator"], ${selectors.leftSidebar} a[href*="/i/jf/creators/studio"][role="link"][aria-label], ${selectors.leftSidebar} a[href*="creator"][role="link"][aria-label]`,
+  jobs: `${selectors.leftSidebar} [data-testid*="Jobs"], ${selectors.leftSidebar} a[href*="jobs"]`,
+  articles: `${selectors.leftSidebar} [data-testid*="Articles"], ${selectors.leftSidebar} a[href="/compose/articles"], ${selectors.leftSidebar} a[href*="articles"][role="link"][aria-label]`,
   topics: `${selectors.leftSidebar} a[href*=topics]`,
   circles: `${selectors.leftSidebar} a[href*=circles]`,
   communities: `${selectors.leftSidebar} a[href*=communities]`,
   profile: `${selectors.leftSidebar} [data-testid="AppTabBar_Profile_Link"]`,
-  lists: `${selectors.leftSidebar} a[href*="lists"][role="link"][aria-label]`,
-  xPremium: `${selectors.leftSidebar} a[href*="premium"][role="link"][aria-label]`,
-  verifiedOrgs: `${selectors.leftSidebar} a[href*="verified-orgs"][role="link"][aria-label]`,
-  grok: `${selectors.leftSidebar} a[href*="grok"][role="link"][aria-label]`,
+  lists: `${selectors.leftSidebar} [data-testid="AppTabBar_Lists_Link"], ${selectors.leftSidebar} a[href*="lists"][role="link"][aria-label]`,
+  xPremium: `${selectors.leftSidebar} [data-testid*="Premium"], ${selectors.leftSidebar} a[href*="premium"][role="link"][aria-label]`,
+  verifiedOrgs: `${selectors.leftSidebar} [data-testid*="Verified"], ${selectors.leftSidebar} a[href*="verified-orgs"][role="link"][aria-label]`,
+  grok: `${selectors.leftSidebar} [data-testid*="Grok"], ${selectors.leftSidebar} a[href*="grok"][role="link"][aria-label]`,
 };
 selectors.accountSwitcherButton = `[data-testid="SideNav_AccountSwitcher_Button"]`;
 selectors.leftSidebarLabel = `${selectors.leftSidebarLinks} > * > div > div + div:last-child`;
@@ -41,9 +43,9 @@ selectors.messagesDrawerMain = `[data-testid="chat-drawer-main"]`;
 selectors.messagesDrawerLegacy = `[data-testid="DMDrawer"]`;
 // Timeline
 selectors.timelineTablist = `div[data-testid='ScrollSnap-List'][role='tablist']`;
-selectors.timelineTab = `div[role='tab']`;
+selectors.timelineTab = `[role='tab']`;
 selectors.timelineTabPresentation = `div[role='presentation']`;
-selectors.timelineTabSelected = `div[role='tab'][aria-selected='true']`;
+selectors.timelineTabSelected = `[role='tab'][aria-selected='true']`;
 selectors.timelineTabText = `div[dir='ltr'] > span`;
 selectors.timelineOptions = `div[aria-label='Timeline options']`;
 selectors.topTweetsOn = `div[aria-label='Top Tweets on']`;

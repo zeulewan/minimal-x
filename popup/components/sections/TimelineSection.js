@@ -1,5 +1,6 @@
 import {
   KeyFollowingTimeline,
+  KeyHideForYouTimeline,
   KeyHideViewCount,
   KeyRecentMedia,
   KeyRemovePromotedPosts,
@@ -43,6 +44,7 @@ const TimelineSection = () => {
           <LocalStorageCheckboxControl label="Tweet Borders" storageKey={KeyRemoveTweetBorders} crossedIcon />
           <Separator />
           <LocalStorageCheckboxControl label={`Always use "Following" Tab`} storageKey={KeyFollowingTimeline} />
+          <LocalStorageCheckboxControl label={`Hide "For You" Tab`} storageKey={KeyHideForYouTimeline} crossedIcon />
         </ControlsWrapper>
       ) : (
         <ControlsWrapper className="animate-pulse h-[115.5px]" />

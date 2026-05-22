@@ -14,8 +14,10 @@ import {
   KeyExploreButton,
   KeyFollowCount,
   KeyFollowingTimeline,
+  KeyFollowingButton,
   KeyGrokButton,
   KeyHideGrokDrawer,
+  KeyHideForYouTimeline,
   KeyHideMessagesDrawer,
   KeyHideViewCount,
   KeyHomeButton,
@@ -24,6 +26,7 @@ import {
   KeyLikeCount,
   KeyListsButton,
   KeyMessagesButton,
+  KeyMoreButton,
   KeyNavigationButtonsLabels,
   KeyNavigationCenter,
   KeyNotificationsButton,
@@ -60,11 +63,13 @@ import {
   changeCommunitiesButton,
   changeCreatorStudioButton,
   changeExploreButton,
+  changeFollowingButton,
   changeGrokButton,
   changeHomeButton,
   changeJobsButton,
   changeListsButton,
   changeMessagesButton,
+  changeMoreButton,
   changeNavigationButtonsLabels,
   changeNavigationCenter,
   changeNotificationsButton,
@@ -79,6 +84,7 @@ import {
 } from "../options/navigation";
 import {
   changeFollowingTimeline,
+  changeHideForYouTimeline,
   changePromotedPosts,
   changeRecentMedia,
   changeStickyHeader,
@@ -97,6 +103,7 @@ export const staticFeatures = {
     changeTweetBorders(data[KeyRemoveTweetBorders]);
     changeStickyHeader(data[KeyStickyHeader]);
     changeFollowingTimeline(data[KeyFollowingTimeline]);
+    changeHideForYouTimeline(data[KeyHideForYouTimeline]);
     changeHideViewCounts(data[KeyHideViewCount]);
     changeRecentMedia(data[KeyRecentMedia]);
     changeTrendsHomeTimeline(data[KeyTrendsHomeTimeline]);
@@ -129,7 +136,9 @@ export const staticFeatures = {
     changeExploreButton(data[KeyExploreButton]);
     changeNotificationsButton(data[KeyNotificationsButton]);
     changeMessagesButton(data[KeyMessagesButton]);
+    changeFollowingButton(data[KeyFollowingButton]);
     changeBookmarksButton(data[KeyBookmarksButton]);
+    changeMoreButton(data[KeyMoreButton]);
     changeCreatorStudioButton(data[KeyCreatorStudioButton]);
     changeJobsButton(data[KeyJobsButton]);
     changeArticlesButton(data[KeyArticlesButton]);

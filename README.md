@@ -1,17 +1,16 @@
 <p align="center">
-  <img width="80px" alt="More Minimal X App Icon" src=".github/assets/MoreMinimalXIcon.png" />
+  <img width="80px" alt="Minimal X App Icon" src=".github/assets/MoreMinimalXIcon.png" />
 </p>
 
 <h1 align="center">
-  More Minimal Theme for X / Twitter<br/>
-  No <strike><a href="https://github.com/notkainoa/more-minimal-twitter">Typefully</a></strike> BS
+  Minimal X
 </h1>
 
 Available on [Chrome](https://chromewebstore.google.com/detail/more-minimal-theme-for-x/kpgpcboeegciohjfcmhgjijobamjffea) — or via [manual installation](./MANUAL_INSTALLATION.MD) for Firefox & Safari.
 
 ![Hero](.github/assets/hero.png)
 
-**More Minimal Theme for X / Twitter** is a browser extension originally made by [Thomas Wang](https://www.linkedin.com/in/xinganwang/), developed further by the [Typefully](https://typefully.com/?ref=minimal-twitter) team, and now forked + updated by [Kainoa Newton](https://github.com/notkainoa). To contribute / see development instructions, go to [CONTRIBUTING](./.github/CONTRIBUTING.md).
+**Minimal X** is a browser extension originally made by [Thomas Wang](https://www.linkedin.com/in/xinganwang/), developed further by the [Typefully](https://typefully.com/?ref=minimal-twitter) team, and now forked + updated by [Kainoa Newton](https://github.com/notkainoa). To contribute / see development instructions, go to [CONTRIBUTING](./.github/CONTRIBUTING.md).
 
 ## Description
 

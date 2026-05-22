@@ -4,4 +4,5 @@ module.exports = {
   // for server output tracing). A lockfile in a parent folder outside this repo
   // can be unreadable on macOS (EPERM) and break `next build`.
   outputFileTracing: false,
+  generateBuildId: async () => "more-minimal-twitter",
 };

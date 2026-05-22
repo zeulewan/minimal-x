@@ -1,0 +1,25 @@
+{
+  "name": {
+    "en-US": "Minimal X"
+  },
+  "summary": {
+    "en-US": "Refine and declutter the X/Twitter web experience with local-only customization controls."
+  },
+  "description": {
+    "en-US": "Minimal X removes common distractions from the X/Twitter web interface and gives you controls for a cleaner timeline.\n\nFeatures include:\n\n* Hide promoted posts, trends, suggestions, view counts, and vanity metrics\n* Customize timeline width and remove visual clutter around the timeline\n* Simplify the left navigation and hide unused X/Twitter surfaces\n* Hide Grok-related UI elements\n* Keep preferences stored locally on your device\n\nThis extension does not collect analytics, does not transmit personal data, and does not require an external account."
+  },
+  "developer_comments": {
+    "en-US": "This is a fork of the open-source Minimal Twitter extension, updated as Minimal X. It stores user preferences locally through browser storage and does not collect or transmit user data."
+  },
+  "categories": {
+    "firefox": ["social-communication"]
+  },
+  "requires_payment": false,
+  "is_experimental": false,
+  "homepage": {
+    "en-US": "https://github.com/zeulewan/more-minimal-twitter"
+  },
+  "support_url": {
+    "en-US": "https://github.com/zeulewan/more-minimal-twitter/issues"
+  }
+}

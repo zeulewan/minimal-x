@@ -49,15 +49,15 @@ const stopSpinner = (intervalId) => {
 };
 
 let manifest = {
-  name: "More Minimal Theme for X / Twitter",
-  short_name: "More Minimal X",
+  name: "Minimal X",
+  short_name: "Minimal X",
   description: "Refine and declutter the 𝕏/Twitter web experience.",
-  version: "0.1",
+  version: "0.2",
   icons: {
-    16: "images/MoreMinimalX.png",
-    32: "images/MoreMinimalX.png",
-    48: "images/MoreMinimalX.png",
-    128: "images/MoreMinimalX.png",
+    16: "images/MoreMinimalX-16.png",
+    32: "images/MoreMinimalX-32.png",
+    48: "images/MoreMinimalX-48.png",
+    128: "images/MoreMinimalX-128.png",
   },
   permissions: ["storage"],
   options_ui: {
@@ -99,11 +99,11 @@ const MANIFEST_CHROME = {
   ],
   action: {
     default_icon: {
-      16: "images/MoreMinimalX.png",
-      32: "images/MoreMinimalX.png",
-      48: "images/MoreMinimalX.png",
+      16: "images/MoreMinimalX-16.png",
+      32: "images/MoreMinimalX-32.png",
+      48: "images/MoreMinimalX-48.png",
     },
-    default_title: "More Minimal X",
+    default_title: "Minimal X",
     default_popup: "index.html",
   },
 };
@@ -113,7 +113,10 @@ const MANIFEST_FIREFOX = {
   manifest_version: 2,
   browser_specific_settings: {
     gecko: {
-      id: "{e7476172-097c-4b77-b56e-f56a894adca9}",
+      id: "{f718b762-bd7e-47d2-901f-e9057339c52a}",
+      data_collection_permissions: {
+        required: ["none"],
+      },
     },
   },
   background: {
@@ -137,11 +140,11 @@ const MANIFEST_FIREFOX = {
   ],
   browser_action: {
     default_icon: {
-      16: "images/MoreMinimalX.png",
-      32: "images/MoreMinimalX.png",
-      48: "images/MoreMinimalX.png",
+      16: "images/MoreMinimalX-16.png",
+      32: "images/MoreMinimalX-32.png",
+      48: "images/MoreMinimalX-48.png",
     },
-    default_title: "More Minimal X",
+    default_title: "Minimal X",
     default_popup: "index.html",
   },
 };
@@ -212,12 +215,12 @@ const bundleAll = async () => {
   await bundle(MANIFEST_FIREFOX, "bundle/firefox");
 };
 
-const generateSafariProjectCommand = `xcrun safari-web-extension-converter bundle/firefox --project-location bundle/safari --app-name 'More Minimal X' --bundle-identifier 'com.typefully.minimal-twitter'`;
+const generateSafariProjectCommand = `xcrun safari-web-extension-converter bundle/firefox --project-location bundle/safari --app-name 'Minimal X' --bundle-identifier 'com.typefully.minimal-twitter'`;
 
 // The first command currently ignores the full --bundle-identifier flag (it still take the company name), so a replace is required to make sure it matches our bundle identifier
-const fixBundleIdentifierCommand = `find "bundle/safari/More Minimal X" \\( -name "*.swift" -or -name "*.pbxproj" \\) -type f -exec sed -i '' 's/com.typefully.More-Minimal-X/com.typefully.minimal-twitter/g' {} +`;
+const fixBundleIdentifierCommand = `find "bundle/safari/Minimal X" \\( -name "*.swift" -or -name "*.pbxproj" \\) -type f -exec sed -i '' 's/com.typefully.Minimal-X/com.typefully.minimal-twitter/g' {} +`;
 const SAFARI_VERSION_FILE = "./safari-version.json";
-const SAFARI_PROJECT_FILE = "./bundle/safari/More Minimal X/More Minimal X.xcodeproj/project.pbxproj";
+const SAFARI_PROJECT_FILE = "./bundle/safari/Minimal X/Minimal X.xcodeproj/project.pbxproj";
 
 const applySafariProjectVersioning = async () => {
   const content = await readFile(SAFARI_VERSION_FILE, "utf8");

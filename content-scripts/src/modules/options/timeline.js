@@ -183,7 +183,9 @@ export const changeTopicsToFollow = (removeTopicsToFollow) => {
 };
 
 export const changeTimelineTabs = (removeTimelineTabs) => {
-  if (window.location.pathname.includes("compose/tweet") || !window.location.pathname.includes("/home") || !window.location.pathname === "/") {
+  const isHomeTimeline = window.location.pathname === "/" || window.location.pathname === "/home";
+
+  if (window.location.pathname.includes("compose/tweet") || !isHomeTimeline) {
     removeStyles("removeTimelineTabs");
     return;
   }
@@ -324,13 +326,26 @@ export const changeTrendsHomeTimeline = (trendsHomeTimeline) => {
 export const changeFollowingTimeline = (followingTimeline) => {
   if (followingTimeline !== "on") return;
 
+  const isHomeTimeline = window.location.pathname === "/" || window.location.pathname === "/home";
+  const isFollowingRoute = new URLSearchParams(window.location.search).get("f") === "live";
+
+  if (isHomeTimeline && !isFollowingRoute) {
+    window.location.assign("/home?f=live");
+    return;
+  }
+
   const tablist = document.querySelector(selectors.timelineTablist);
   const selectedTab = document.querySelector(`${selectors.timelineTablist} ${selectors.timelineTabSelected}`);
 
   if (!tablist || !selectedTab) return;
 
-  // Get localized "Following" text (it's the second tab)
-  const followingTabSpan = tablist.querySelector(`${selectors.timelineTabPresentation}:nth-of-type(2) span`);
+  const followingTab =
+    tablist.querySelector(`${selectors.timelineTab}[href*="f=live"]`) ||
+    tablist.querySelector(`${selectors.timelineTabPresentation}:nth-child(2) ${selectors.timelineTab}`);
+
+  if (!followingTab) return;
+
+  const followingTabSpan = followingTab.querySelector("span");
   if (!followingTabSpan) return;
 
   const followingTabText = followingTabSpan.textContent.toLowerCase();
@@ -340,11 +355,31 @@ export const changeFollowingTimeline = (followingTimeline) => {
   const selectedTabText = selectedTabSpan.textContent.toLowerCase();
 
   if (selectedTabText === followingTabText) return; // Already on the "Following" tab
+  followingTab.click();
+};
 
-  const secondTab = tablist.querySelector(`${selectors.timelineTabPresentation}:nth-child(2) ${selectors.timelineTab}`);
-  if (!secondTab) return;
+export const changeHideForYouTimeline = (hideForYouTimeline) => {
+  if (hideForYouTimeline !== "on") {
+    removeStyles("hideForYouTimeline");
+    return;
+  }
 
-  secondTab.click();
+  const isHomeTimeline = window.location.pathname === "/" || window.location.pathname === "/home";
+  const isFollowingRoute = new URLSearchParams(window.location.search).get("f") === "live";
+
+  if (isHomeTimeline && !isFollowingRoute) {
+    window.location.assign("/home?f=live");
+    return;
+  }
+
+  addStyles(
+    "hideForYouTimeline",
+    `
+      ${selectors.timelineTablist} ${selectors.timelineTabPresentation}:first-child {
+        display: none;
+      }
+    `
+  );
 };
 
 let lt1; // Latest Tweets timeout 1

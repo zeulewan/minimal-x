@@ -47,7 +47,7 @@ const createNewElement = ({ profileNode, name, href, userHref, onClick, svgAsset
       if (userHref) newNode.href += userHref;
     } else if (onClick) {
       newNode = document.createElement("div");
-      newNode.innerHTML = profileNode.innerHTML;
+      newNode.replaceChildren(...Array.from(profileNode.childNodes).map((node) => node.cloneNode(true)));
       newNode.style.cursor = "pointer";
       newNode.onclick = () => onClick(newNode);
     }
@@ -55,7 +55,7 @@ const createNewElement = ({ profileNode, name, href, userHref, onClick, svgAsset
     newNode.setAttribute("aria-label", name);
     newNode.removeAttribute("data-testid");
     newNode.classList.add("mt-sidebar-button"); // To style it in main.css
-    newNode.firstChild.firstChild.firstChild.innerHTML = svgAsset;
+    replaceSvgChildren(newNode.firstChild.firstChild.firstChild, svgAsset);
     newNode.firstChild.lastChild.firstChild.innerText = name;
   } catch (error) {
     console.log(`❌ Error creating ${name} sidebar button`);
@@ -63,4 +63,11 @@ const createNewElement = ({ profileNode, name, href, userHref, onClick, svgAsset
   }
 
   return newNode;
+};
+
+const replaceSvgChildren = (svgElement, svgAsset) => {
+  const svgDocument = new DOMParser().parseFromString(`<svg xmlns="http://www.w3.org/2000/svg">${svgAsset}</svg>`, "image/svg+xml");
+  const svgChildren = Array.from(svgDocument.documentElement.childNodes).map((node) => document.importNode(node, true));
+
+  svgElement.replaceChildren(...svgChildren);
 };

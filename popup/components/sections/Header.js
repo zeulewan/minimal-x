@@ -1,8 +1,8 @@
 import createTweetLink from "../../utilities/createTweetLink";
 
 const tweet = {
-  text: "More Minimal X makes 𝕏 much nicer and cleaner",
-  url: "https://github.com/notkainoa/more-minimal-twitter",
+  text: "Minimal X makes 𝕏 much nicer and cleaner",
+  url: "https://github.com/zeulewan/more-minimal-twitter",
 };
 
 const Header = () => (
@@ -31,11 +31,11 @@ const Header = () => (
         Share
       </a>
       <h1 className="text-xl font-extrabold">
-        <span>More Minimal X</span>
+        <span>Minimal X</span>
       </h1>
     </div>
     <p className="pt-3 pb-3 text-sm font-medium leading-5 dark:text-x-accent1Dark text-x-accent1">
-      More Minimal X, without all the BS
+      Minimal X
     </p>
   </header>
 );

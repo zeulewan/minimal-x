@@ -1,0 +1,7 @@
+{
+  "approval_notes": "The remaining validator warnings are from generated Next.js static-export runtime chunks in the extension settings UI. The source package includes the full popup and content-script source, lockfiles, and build instructions. Content-script innerHTML usage flagged in the first local pass was removed before submission. The extension stores preferences locally and does not collect or transmit user data.",
+  "release_notes": {
+    "en-US": "Renamed the extension to Minimal X, added a Hide For You timeline toggle, and added controls for additional X sidebar buttons."
+  },
+  "license": "MIT"
+}
