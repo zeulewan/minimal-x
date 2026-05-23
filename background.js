@@ -5,23 +5,15 @@ chrome.runtime.onInstalled.addListener((object) => {
     return;
   }
 
-  const targetUrl = `https://github.com/zeulewan/more-minimal-twitter`;
-
-  if (targetUrl) {
-    chrome.tabs.create({
-      url: targetUrl,
+  // Reload any open Twitter/X tabs so the extension applies immediately.
+  chrome.tabs.query({ url: "*://twitter.com/*" }, (tabs) => {
+    tabs.forEach((tab) => {
+      chrome.tabs.reload(tab.id);
     });
-
-    // Reload any open Twitter/X tabs
-    chrome.tabs.query({ url: "*://twitter.com/*" }, (tabs) => {
-      tabs.forEach((tab) => {
-        chrome.tabs.reload(tab.id);
-      });
+  });
+  chrome.tabs.query({ url: "*://x.com/*" }, (tabs) => {
+    tabs.forEach((tab) => {
+      chrome.tabs.reload(tab.id);
     });
-    chrome.tabs.query({ url: "*://x.com/*" }, (tabs) => {
-      tabs.forEach((tab) => {
-        chrome.tabs.reload(tab.id);
-      });
-    });
-  }
+  });
 });
