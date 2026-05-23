@@ -5,27 +5,28 @@ export default function isMutationSkippable(mutationsList) {
   const el = a || r; // Element
 
   try {
+    const getElement = (node) => (node?.nodeType === 1 ? node : node?.parentElement);
+    const hasMinimalTwitterClass = (node) => {
+      const element = getElement(node);
+      return element?.classList?.contains("mt-sidebar-button") || element?.className?.startsWith?.("mt-") || element?.closest?.(".mt-sidebar-button");
+    };
+
     // Minimal Twitter injected elements
     if (
       el?.id?.startsWith("mt-") ||
       t?.id?.startsWith("mt-") ||
-      t?.className?.startsWith("mt-") // For example .mt-tooltip ends up here
+      hasMinimalTwitterClass(el) ||
+      hasMinimalTwitterClass(t)
     )
       return true;
 
     // Engagement counts
-    if (t.closest(`[data-testid="like"]`) || t.closest(`[data-testid="retweet"]` || t.closest(`[data-testid="reply"]`))) {
+    if (t?.closest?.(`[data-testid="like"], [data-testid="retweet"], [data-testid="reply"]`)) {
       return true;
     }
 
-    // Inside the sidebar
-    if (t.closest(`nav[role="navigation"]`)) return true;
-
-    // Sidebar itself
-    if (t?.nodeName === "NAV" && t?.getAttribute("role") === "navigation") return true;
-
     // <head> changes
-    if (t.closest("head")) return true;
+    if (t?.closest?.("head")) return true;
 
     // User Avatar changes
     if (el?.closest("[data-testid^='UserAvatar-Container']") || t?.closest("[data-testid^='UserAvatar-Container']")) return true;
@@ -48,7 +49,7 @@ export default function isMutationSkippable(mutationsList) {
     }
 
     // Links previews (inside a data-testid="card.wrapper")
-    if (el.closest("[data-testid='card.wrapper']")) {
+    if (el?.closest?.("[data-testid='card.wrapper']")) {
       return true;
     }
 

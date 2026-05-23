@@ -14,7 +14,7 @@ export const changeSidebarSetting = (sidebarSelector, state, onAdd) => {
       addStyles(
         sidebarSelector,
         `${selectors.sidebarLinks[sidebarSelector]} {
-          display: none;
+          display: none !important;
         }`
       );
       break;

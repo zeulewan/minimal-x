@@ -1,12 +1,22 @@
 import { removeElementById } from "./removeElement";
 
 export default function addStyles(id, css) {
-  removeElementById("mt-style-" + id);
+  const styleId = "mt-style-" + id;
+  const styleText = css.trim().split("\n").join("");
+  const existingStyle = document.getElementById(styleId);
+
+  if (existingStyle?.textContent === styleText) {
+    return;
+  }
+
+  removeElementById(styleId);
 
   const head = document.querySelector("head");
+  if (!head) return;
+
   const style = document.createElement("style");
-  style.id = "mt-style-" + id;
-  style.textContent = css.trim().split("\n").join("");
+  style.id = styleId;
+  style.textContent = styleText;
   head.appendChild(style);
 }
 

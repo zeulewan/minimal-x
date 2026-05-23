@@ -6,31 +6,17 @@
  */
 
 import {
-  KeyArticlesButton,
-  KeyBookmarksButton,
-  KeyCommunitiesButton,
-  KeyCreatorStudioButton,
   KeyCustomCss,
-  KeyExploreButton,
   KeyFollowCount,
   KeyFollowingTimeline,
-  KeyFollowingButton,
-  KeyGrokButton,
   KeyHideGrokDrawer,
   KeyHideForYouTimeline,
   KeyHideMessagesDrawer,
   KeyHideViewCount,
-  KeyHomeButton,
   KeyInterFont,
-  KeyJobsButton,
   KeyLikeCount,
-  KeyListsButton,
-  KeyMessagesButton,
-  KeyMoreButton,
   KeyNavigationButtonsLabels,
   KeyNavigationCenter,
-  KeyNotificationsButton,
-  KeyProfileButton,
   KeyRecentMedia,
   KeyRemovePromotedPosts,
   KeyRemoveTimelineBorders,
@@ -44,41 +30,22 @@ import {
   KeyStickyHeader,
   KeyTimelineWidth,
   KeyTitleNotifications,
-  KeyTopicsButton,
   KeyTransparentSearch,
   KeyTrendsHomeTimeline,
   KeyTweetButton,
   KeyTweetButtonPosition,
   KeyUnreadCountBadge,
-  KeyVerifiedOrgsButton,
-  KeyXPremiumButton,
 } from "../../../../storage-keys";
+import { applySidebarFeatures } from "./sidebar";
 import { changeCustomCss } from "../options/customCss";
 import { changeFollowingAndFollowersCounts, changeLikeCount, changeReplyCount, changeRetweetCount } from "../options/hideVanityCounts";
 import changeHideViewCounts from "../options/hideViewCount";
 import { changeHideSearchBar, changeInterFont, changeTitleNotifications, changeTransparentSearchBar, changeTweetButton, changeTweetButtonPosition } from "../options/interface";
 import {
-  changeArticlesButton,
-  changeBookmarksButton,
-  changeCommunitiesButton,
-  changeCreatorStudioButton,
-  changeExploreButton,
-  changeFollowingButton,
-  changeGrokButton,
-  changeHomeButton,
-  changeJobsButton,
-  changeListsButton,
-  changeMessagesButton,
-  changeMoreButton,
   changeNavigationButtonsLabels,
   changeNavigationCenter,
-  changeNotificationsButton,
-  changeProfileButton,
   changeSidebarLogo,
-  changeTopicsButton,
   changeUnreadCountBadge,
-  changeVerifiedOrgsButton,
-  changeXPremiumButton,
   hideGrokDrawer,
   hideMessagesDrawer,
 } from "../options/navigation";
@@ -132,23 +99,7 @@ export const staticFeatures = {
     changeTweetButtonPosition(data[KeyTweetButtonPosition]);
   },
   sidebar: (data) => {
-    changeHomeButton(data[KeyHomeButton]);
-    changeExploreButton(data[KeyExploreButton]);
-    changeNotificationsButton(data[KeyNotificationsButton]);
-    changeMessagesButton(data[KeyMessagesButton]);
-    changeFollowingButton(data[KeyFollowingButton]);
-    changeBookmarksButton(data[KeyBookmarksButton]);
-    changeMoreButton(data[KeyMoreButton]);
-    changeCreatorStudioButton(data[KeyCreatorStudioButton]);
-    changeJobsButton(data[KeyJobsButton]);
-    changeArticlesButton(data[KeyArticlesButton]);
-    changeCommunitiesButton(data[KeyCommunitiesButton]);
-    changeTopicsButton(data[KeyTopicsButton]);
-    changeListsButton(data[KeyListsButton]);
-    changeProfileButton(data[KeyProfileButton]);
-    changeXPremiumButton(data[KeyXPremiumButton]);
-    changeGrokButton(data[KeyGrokButton]);
-    changeVerifiedOrgsButton(data[KeyVerifiedOrgsButton]);
+    applySidebarFeatures(data);
   },
   advanced: (data) => {
     changeCustomCss(data[KeyCustomCss]);

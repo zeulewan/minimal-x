@@ -7,21 +7,18 @@
  */
 
 import {
-  KeyCommunitiesButton,
   KeyFollowingTimeline,
   KeyHideForYouTimeline,
   KeyHideGrokDrawer,
   KeyHideMessagesDrawer,
   KeyHideViewCount,
-  KeyListsButton,
   KeyNavigationButtonsLabels,
   KeyRemoveTimelineTabs,
-  KeyTopicsButton,
   KeyTrendsHomeTimeline,
-  KeyXPremiumButton,
 } from "../../../../storage-keys";
+import { applySidebarFeatures, sidebarSettingKeys } from "./sidebar";
 import changeHideViewCounts from "../options/hideViewCount";
-import { addCommunitiesButton, addListsButton, addTopicsButton, addXPremiumButton, hideGrokDrawer, hideMessagesDrawer, changeNavigationButtonsLabels } from "../options/navigation";
+import { hideGrokDrawer, hideMessagesDrawer, changeNavigationButtonsLabels } from "../options/navigation";
 import { changeFollowingTimeline, changeHideForYouTimeline, changeRecentMedia, changeTimelineTabs, changeTrendsHomeTimeline, enableGrokDrawerOnGrokButtonClick } from "../options/timeline";
 import hideRightSidebar from "../utilities/hideRightSidebar";
 import { updateLeftSidebarPositioning } from "../utilities/leftSidebarPosition";
@@ -49,15 +46,8 @@ export const dynamicFeatures = {
     changeFollowingTimeline(data[KeyFollowingTimeline]);
     changeHideForYouTimeline(data[KeyHideForYouTimeline]);
   },
-  sidebarButtons: async () => {
-    const data = await getStorage([KeyListsButton, KeyCommunitiesButton, KeyTopicsButton, KeyXPremiumButton]);
-
-    if (!data) return;
-
-    if (data[KeyListsButton] === "on") addListsButton();
-    if (data[KeyCommunitiesButton] === "on") addCommunitiesButton();
-    if (data[KeyTopicsButton] === "on") addTopicsButton();
-    if (data[KeyXPremiumButton] === "on") addXPremiumButton();
+  sidebar: (data) => {
+    applySidebarFeatures(data);
   },
 };
 
@@ -70,13 +60,14 @@ export const runDynamicFeatures = throttle(async () => {
     KeyHideGrokDrawer,
     KeyHideMessagesDrawer,
     KeyNavigationButtonsLabels,
+    ...sidebarSettingKeys,
   ]);
 
   if (data) {
     dynamicFeatures.general();
-    await dynamicFeatures.sidebarButtons();
     dynamicFeatures.timeline(data);
     dynamicFeatures.navigation(data);
+    dynamicFeatures.sidebar(data);
 
     // The Grok drawer appears dynamically, so we need to handle it here as well
     // as in the static features module
