@@ -52,7 +52,7 @@ let manifest = {
   name: "Minimal X",
   short_name: "Minimal X",
   description: "Refine and declutter the 𝕏/Twitter web experience.",
-  version: "0.4",
+  version: "0.5",
   icons: {
     16: "images/MoreMinimalX-16.png",
     32: "images/MoreMinimalX-32.png",

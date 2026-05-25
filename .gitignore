@@ -40,6 +40,7 @@ package-lock.json
 out
 dist
 bundle/
+web-ext-artifacts/
 .vscode
 
 # xcode project
