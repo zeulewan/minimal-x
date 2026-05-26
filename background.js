@@ -5,7 +5,7 @@ chrome.runtime.onInstalled.addListener((object) => {
     return;
   }
 
-  // Reload any open Twitter/X tabs so the extension applies immediately.
+  // Reload any open X tabs so the extension applies immediately.
   chrome.tabs.query({ url: "*://twitter.com/*" }, (tabs) => {
     tabs.forEach((tab) => {
       chrome.tabs.reload(tab.id);

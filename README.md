@@ -14,7 +14,7 @@ Available on [Chrome](https://chromewebstore.google.com/detail/more-minimal-them
 
 ## Description
 
-Refine and clean up the X/Twitter interface, and customize your experience:
+Refine and clean up the X interface, and customize your experience:
 
 - Default to the "Following" timeline
 - Hide the sticky Timeline header

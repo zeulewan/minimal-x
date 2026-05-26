@@ -51,7 +51,7 @@ const stopSpinner = (intervalId) => {
 let manifest = {
   name: "Minimal X",
   short_name: "Minimal X",
-  description: "Refine and declutter the 𝕏/Twitter web experience.",
+  description: "Refine and declutter the X web experience.",
   version: "0.5",
   icons: {
     16: "images/MoreMinimalX-16.png",
