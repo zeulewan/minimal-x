@@ -7,7 +7,7 @@
   No <strike><a href="https://github.com/notkainoa/more-minimal-twitter">Typefully</a></strike> BS
 </h1>
 
-Available on [Chrome](https://chromewebstore.google.com/detail/more-minimal-theme-for-x/kpgpcboeegciohjfcmhgjijobamjffea) — or via [manual installation](./MANUAL_INSTALLATION.MD) for Firefox & Safari.
+Available on [Chrome](https://chromewebstore.google.com/detail/more-minimal-theme-for-x/kpgpcboeegciohjfcmhgjijobamjffea), [Firefox](https://addons.mozilla.org/en-US/firefox/addon/minimal-x-twitter/), or via [manual installation](./MANUAL_INSTALLATION.MD) for Safari.
 
 ![Hero](.github/assets/hero.png)
 
