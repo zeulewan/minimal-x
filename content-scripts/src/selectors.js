@@ -1,4 +1,5 @@
 const selectors = {};
+selectors.homeTimelineTablist = '[data-testid="primaryColumn"] [data-testid="ScrollSnap-List"][role="tablist"]';
 
 // Layout
 selectors.mainWrapper = `main[role="main"]`;

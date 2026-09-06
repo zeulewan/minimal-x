@@ -1,7 +1,7 @@
-import { KeyExtensionStatus } from "../../storage-keys";
+import { allSettingsKeys, KeyExtensionStatus } from "../../storage-keys";
 import { applyStaticFeatures } from "./modules/features/static";
 import { initializeExtension } from "./modules/initialize";
-import constructNewData from "./modules/utilities/constructNewData";
+import { runDynamicFeatures } from "./modules/features/dynamic";
 import { getStorage } from "./modules/utilities/storage";
 
 /**
@@ -17,7 +17,8 @@ import { getStorage } from "./modules/utilities/storage";
  */
 
 // Listen to settings changes
-chrome.storage.onChanged.addListener(async (changes) => {
+chrome.storage.onChanged.addListener(async (changes, area) => {
+  if (area !== "local") return;
   if (changes[KeyExtensionStatus]?.newValue !== changes[KeyExtensionStatus]?.oldValue) {
     window.location.reload();
     return;
@@ -26,8 +27,11 @@ chrome.storage.onChanged.addListener(async (changes) => {
   const status = await getStorage(KeyExtensionStatus);
   if (status === "off") return;
 
-  const newData = constructNewData(changes);
-  applyStaticFeatures(newData);
+  // Features with linked settings (such as button position and navigation labels)
+  // need a complete snapshot. Run DOM features even if styles were unchanged.
+  const data = await getStorage(allSettingsKeys);
+  applyStaticFeatures(data);
+  runDynamicFeatures();
 });
 
 // Initialize extension

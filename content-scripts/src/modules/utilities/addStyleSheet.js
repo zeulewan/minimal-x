@@ -1,4 +1,6 @@
 export default function addStyleSheet(id, href, text) {
+  const existing = document.getElementById(`mt-${id}-stylesheet`);
+  if (existing) return existing;
   const head = document.querySelector("head");
   let stylesheet;
 
@@ -11,6 +13,6 @@ export default function addStyleSheet(id, href, text) {
     stylesheet.appendChild(document.createTextNode(text));
   }
   stylesheet.id = `mt-${id}-stylesheet`;
-  head.appendChild(stylesheet);
+  head.insertBefore(stylesheet, document.getElementById("custom-css"));
   return stylesheet;
 }

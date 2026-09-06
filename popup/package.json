@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "lint": "next lint",
-    "build": "next build && next export && node ./sanitize.js",
+    "build": "next lint && next build && next export && node ./sanitize.js",
     "start": "next start",
     "check:prettier": "prettier --check .",
     "write:prettier": "prettier --write ."
