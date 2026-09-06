@@ -6,11 +6,13 @@
   Minimal X
 </h1>
 
-Available on [Chrome](https://chromewebstore.google.com/detail/more-minimal-theme-for-x/kpgpcboeegciohjfcmhgjijobamjffea) — or via [manual installation](./MANUAL_INSTALLATION.MD) for Firefox & Safari.
+Install from [Firefox Add-ons](https://addons.mozilla.org/en-US/firefox/addon/minimal-x-twitter/). For Chrome, Edge, and Safari, see [manual installation](./MANUAL_INSTALLATION.MD).
+
+Canonical repository: [zeulewan/minimal-x](https://github.com/zeulewan/minimal-x).
 
 ![Hero](.github/assets/hero.png)
 
-**Minimal X** is a browser extension originally made by [Thomas Wang](https://www.linkedin.com/in/xinganwang/), developed further by the [Typefully](https://typefully.com/?ref=minimal-twitter) team, and now forked + updated by [Kainoa Newton](https://github.com/notkainoa). To contribute / see development instructions, go to [CONTRIBUTING](./.github/CONTRIBUTING.md).
+**Minimal X** is a browser extension originally made by [Thomas Wang](https://www.linkedin.com/in/xinganwang/), developed further by the [Typefully](https://typefully.com/?ref=minimal-twitter) team, with the marketing-free fork by [Kainoa Newton](https://github.com/notkainoa). This edition is maintained by [Zeul](https://github.com/zeulewan). To contribute / see development instructions, go to [CONTRIBUTING](./.github/CONTRIBUTING.md).
 
 ## Description
 
@@ -34,3 +36,16 @@ Refine and clean up the X interface, and customize your experience:
 ## No typefully marketing/features
 
 The biggest thing changed from [Typefully's version](https://github.com/typefully/minimal-twitter) is the removal of any marketing, features, or advertising for Typefully
+
+
+## Development and diagnostics
+
+Build with Yarn Classic 1.22.22: `yarn install --frozen-lockfile`, then
+`yarn build:all`. Run `yarn test` for regression checks. `yarn scan:build`
+generates the read-only X selector diagnostic in `diagnostics/scan-x.js`.
+Missing matches mean an element is not present on the current page, not that
+its feature is obsolete.
+
+See [Firefox release instructions](./AMO_SOURCE_README.md) for source packaging
+and public store submissions. The Firefox extension ID is preserved across
+repository renames so existing installations can receive updates.

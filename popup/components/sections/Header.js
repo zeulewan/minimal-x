@@ -2,7 +2,7 @@ import createTweetLink from "../../utilities/createTweetLink";
 
 const tweet = {
   text: "Minimal X makes 𝕏 much nicer and cleaner",
-  url: "https://github.com/zeulewan/more-minimal-twitter",
+  url: "https://github.com/zeulewan/minimal-x",
 };
 
 const Header = () => (

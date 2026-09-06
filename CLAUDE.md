@@ -4,9 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Open-source browser extension for Chrome, Firefox, and Safari that customizes the Twitter/X.com interface. Built by Typefully to provide a minimal, focused Twitter experience with customizable UI elements.
+Open-source browser extension for Chrome, Firefox, and Safari that customizes the Twitter/X.com interface. Maintained by Zeul from the marketing-free fork of the original Typefully project.
 
-Repository: https://github.com/typefully/minimal-twitter
+Repository: https://github.com/zeulewan/minimal-x
 
 ## Build and Development Commands
 
@@ -74,7 +74,7 @@ After making changes, refresh the extension in `chrome://extensions` to reload.
 
 **Initialization** (content-scripts/src/modules/initialize.js):
 
-1. Loads stylesheets (local + CDN in production)
+1. Loads bundled local stylesheets
 2. Applies static features once
 3. Runs dynamic features
 4. Sets up MutationObserver for DOM changes
@@ -90,7 +90,7 @@ After making changes, refresh the extension in `chrome://extensions` to reload.
 
 - **Dynamic features** (content-scripts/src/modules/features/dynamic.js):
   - Reapplied on DOM mutations via MutationObserver
-  - Examples: writer mode, view counts, Typefully integration buttons
+  - Examples: Home timeline tabs, view counts, sidebar and drawer controls
   - Throttled to run max every 50ms
 
 **Feature implementation files** (content-scripts/src/modules/options/):
@@ -139,9 +139,8 @@ To add a new feature toggle:
 
 ## CSS and Styling
 
-- Main styles: `/css/main.css` and `/css/typefully.css`
-- In production, extension loads cached versions from GitHub CDN
-- In development mode, only loads local CSS files
+- Main styles: `/css/main.css`
+- Styles are bundled locally in all builds; no remote CSS dependency
 - Content scripts inject styles dynamically via `addStyleSheet()` and `addStyles()` utilities
 
 ## Browser Compatibility
@@ -172,30 +171,11 @@ To add a new feature toggle:
 
 5. Submit bundles to browser stores (Chrome Web Store, Firefox Add-ons, App Store via Xcode)
 
-### Update Screen Behavior
+### Verification and install behavior
 
-Controlled in `background.js`. By default, the welcome page only opens on fresh installs.
+Run `yarn test` for the storage, popup, DOM lifecycle, and diagnostic regressions.
+Run `yarn scan:build` after selector changes; commit the generated diagnostic.
+See `AMO_SOURCE_README.md` for Firefox packaging and source submissions.
 
-To show an update screen for major releases, modify `background.js`:
-
-```js
-// Show welcome page on both install AND update
-if (object.reason !== "install" && object.reason !== "update") {
-  return;
-}
-
-const targetUrl = `https://typefully.com/minimal-twitter/welcome${
-  object.reason === "update" ? "?updated=true" : ""
-}`;
-```
-
-To disable update screen (default):
-
-```js
-// Only show welcome page on fresh install
-if (object.reason !== "install") {
-  return;
-}
-
-const targetUrl = `https://typefully.com/minimal-twitter/welcome`;
-```
+`background.js` reloads matching open X tabs on first install. It does not open
+a welcome or marketing page.

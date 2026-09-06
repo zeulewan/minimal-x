@@ -1,6 +1,6 @@
 # Minimal X 0.6 — Mozilla source submission
 
-Source repository: https://github.com/zeulewan/more-minimal-twitter
+Source repository: https://github.com/zeulewan/minimal-x
 
 This is the source for the existing Minimal X Firefox listing (Gecko ID
 `{f718b762-bd7e-47d2-901f-e9057339c52a}`). It preserves its local-only operation,
