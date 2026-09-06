@@ -52,7 +52,7 @@ let manifest = {
   name: "Minimal X",
   short_name: "Minimal X",
   description: "Refine and declutter the X web experience.",
-  version: "0.5",
+  version: "0.6",
   icons: {
     16: "images/MoreMinimalX-16.png",
     32: "images/MoreMinimalX-32.png",
@@ -153,7 +153,7 @@ const runBuildScript = async (directory) => {
   const intervalId = startSpinner("Building popup and content scripts...");
 
   try {
-    await runCommand(`cd ./${directory} && yarn && yarn build`);
+    await runCommand(`cd ./${directory} && yarn install --frozen-lockfile --non-interactive && yarn build`);
   } catch (error) {
     console.error(`Error running build script for ${directory}: ${error}`);
     throw error;
@@ -165,11 +165,6 @@ const runBuildScript = async (directory) => {
 const bundle = async (manifest, bundleDirectory) => {
   await rm(bundleDirectory, { recursive: true, force: true });
   console.log(`🧹  Cleaned up \`${bundleDirectory}\` directory.`);
-
-  await runBuildScript("popup");
-  await runBuildScript("content-scripts");
-
-  console.log("🔥  Built popup and content scripts.");
 
   await copy("popup/out", `${bundleDirectory}`);
   console.log("🚗  Moved export to bundle.");
@@ -285,25 +280,16 @@ const promptForBrowser = async () => {
 const normalizeBrowserTarget = (browser) => browser?.trim().toLowerCase();
 
 const run = async () => {
-  const browserArg = normalizeBrowserTarget(process.argv[2]);
-
-  if (browserArg) {
-    const bundleAction = bundleActions[browserArg];
-
-    if (!bundleAction) {
-      throw new Error(
-        `Unknown bundle target \`${process.argv[2]}\`. Use one of: all, chrome, firefox, safari.`
-      );
-    }
-
-    await bundleAction();
-    return;
-  }
-
-  const browser = normalizeBrowserTarget(await promptForBrowser());
-  const bundleAction = bundleActions[browser] || bundleActions.all;
-
-  await bundleAction();
+  const arg = process.argv[2] === "--browser" ? process.argv[3] : process.argv[2];
+  if (process.argv[2] === "--browser" && !arg) throw new Error("--browser requires a value");
+  if (process.argv.length > (process.argv[2] === "--browser" ? 4 : 3)) throw new Error("Unexpected build arguments");
+  const browser = normalizeBrowserTarget(arg || (process.stdin.isTTY ? await promptForBrowser() : "all")) || "all";
+  const action = bundleActions[browser];
+  if (!action) throw new Error(`Unknown bundle target ${browser}. Use all, chrome, firefox, safari.`);
+  // Compile once for all targets; failed builds preserve the last packaged output.
+  await runBuildScript("popup");
+  await runBuildScript("content-scripts");
+  await action();
 };
 
 run().catch((error) => {

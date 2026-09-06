@@ -96,7 +96,7 @@ export const staticFeatures = {
     changeTransparentSearchBar(data[KeyTransparentSearch]);
     changeTitleNotifications(data[KeyTitleNotifications]);
     changeTweetButton(data[KeyTweetButton]);
-    changeTweetButtonPosition(data[KeyTweetButtonPosition]);
+    changeTweetButtonPosition(data[KeyTweetButtonPosition], data[KeyNavigationButtonsLabels]);
   },
   sidebar: (data) => {
     applySidebarFeatures(data);

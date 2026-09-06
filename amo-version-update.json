@@ -1,7 +1,7 @@
 {
-  "approval_notes": "The remaining validator warnings are from generated Next.js static-export runtime chunks in the extension settings UI. The source package includes the full popup and content-script source, lockfiles, and build instructions. Content-script innerHTML usage flagged in the first local pass was removed before submission. The extension stores preferences locally and does not collect or transmit user data.",
+  "approval_notes": "See AMO_SOURCE_README.md in the uploaded source archive. Build with Node.js 26.0.0 and Yarn 1.22.22: yarn install --frozen-lockfile --non-interactive; yarn build:firefox. The popup uses a pinned Next.js build ID. Local web-ext validation reports 0 errors, 0 notices, and 10 warnings in bundled Next.js/React runtime chunks. Preferences remain local and no data is collected or transmitted.",
   "release_notes": {
-    "en-US": "Unlisted direct-install build while the public listing remains in review."
+    "en-US": "Fixes settings saving, custom CSS editing and application, title notifications, and repeated event handlers. Following and Hide For You now target identified Home tabs and leave other pages alone. Preserves existing sidebar and drawer controls, local-only preferences, and permissions."
   },
   "license": "MIT"
 }

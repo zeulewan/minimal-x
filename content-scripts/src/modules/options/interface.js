@@ -1,4 +1,4 @@
-import { KeyNavigationButtonsLabels, KeyTitleNotifications } from "../../../../storage-keys";
+import { KeyNavigationButtonsLabels } from "../../../../storage-keys";
 import selectors from "../../selectors";
 import addStyles, { removeStyles } from "../utilities/addStyles";
 import { getStorage } from "../utilities/storage";
@@ -71,45 +71,36 @@ const getSidebarTweetButtonLabelStyles = (navigationButtonsLabels) => {
   }
 };
 
-// Function to change the title notification count
-let nt; // Title Notifications timeout
-export const changeTitleNotifications = (tf) => {
-  const run = async () => {
-    let setting = tf;
+let titleObserver;
+let titleSetting;
+let titleDocument;
+let suppressedTitle;
+const stripTitleCount = () => {
+  const title = document.title;
+  const clean = title.replace(/^(?:\(\d+\)\s*)+/, "");
+  if (clean !== title) {
+    suppressedTitle = { original: title, clean };
+    document.title = clean;
+  }
+  const favicon = document.querySelector('link[rel="shortcut icon"]');
+  if (favicon?.href.includes("-pip.2")) favicon.href = favicon.href.replace("-pip.2", "");
+};
 
-    if (!tf) {
-      setting = await getStorage(KeyTitleNotifications);
-    }
-
-    const favicon = document.querySelector('link[rel="shortcut icon"]');
-
-    if (setting === "on") {
-      favicon.setAttribute("href", favicon.href.replace("twitter.ico", "twitter-pip.2.ico"));
-    } else {
-      if (document.title.charAt(0) === "(") {
-        document.title = document.title.split(" ").slice(1).join(" ");
-      }
-
-      if (document.title.charAt(0) === "(") {
-        document.title = document.title.split(" ").slice(1).join(" ");
-      }
-
-      clearTimeout(nt);
-      nt = setTimeout(() => {
-        favicon.setAttribute("href", favicon.href.replace("-pip.2", ""));
-      });
-    }
-  };
-
-  run();
-
-  const observer = new MutationObserver(() => {
-    run();
-  });
-  const config = { subtree: true, characterData: true, childList: true };
-  const target = document.querySelector("title");
-
-  if (target) observer.observe(target, config);
+export const changeTitleNotifications = (setting) => {
+  if (setting === undefined || (titleDocument === document && titleSetting === setting)) return;
+  titleObserver?.disconnect();
+  titleObserver = undefined;
+  if (titleDocument !== document) suppressedTitle = undefined;
+  titleDocument = document;
+  titleSetting = setting;
+  if (setting === "on") {
+    if (suppressedTitle && document.title === suppressedTitle.clean) document.title = suppressedTitle.original;
+    suppressedTitle = undefined;
+    return;
+  }
+  stripTitleCount();
+  titleObserver = new MutationObserver(stripTitleCount);
+  titleObserver.observe(document.head, { subtree: true, characterData: true, childList: true });
 };
 
 // Function to change to Inter Font

@@ -1,23 +1,14 @@
 import { removeElementById } from "./removeElement";
 
 export default function addStyles(id, css) {
-  const styleId = "mt-style-" + id;
-  const styleText = css.trim().split("\n").join("");
-  const existingStyle = document.getElementById(styleId);
-
-  if (existingStyle?.textContent === styleText) {
-    return;
+  let style = document.getElementById("mt-style-" + id);
+  if (!style) {
+    style = document.createElement("style");
+    style.id = "mt-style-" + id;
+    document.head.insertBefore(style, document.getElementById("custom-css"));
   }
-
-  removeElementById(styleId);
-
-  const head = document.querySelector("head");
-  if (!head) return;
-
-  const style = document.createElement("style");
-  style.id = styleId;
-  style.textContent = styleText;
-  head.appendChild(style);
+  const text = css.trim();
+  if (style.textContent !== text) style.textContent = text;
 }
 
 export function removeStyles(id) {

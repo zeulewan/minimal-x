@@ -1,66 +1,47 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { defaultPreferences } from "../../storage-keys";
 import { getStorage, setStorage } from "./chromeStorage";
 
-export default function useStorageKeyState(storageKey) {
-  const [state, setState] = useState(false);
+export function useStorageState(storageKey) {
+  const [value, setValue] = useState(defaultPreferences[storageKey]);
   const [loaded, setLoaded] = useState(false);
+  const revision = useRef(0);
 
   useEffect(() => {
-    const getInitialState = async () => {
-      try {
-        const savedSetting = await getStorage(storageKey);
-        if (savedSetting !== undefined) {
-          setState(savedSetting === "on" ? true : false);
-        }
-      } catch (error) {
-        console.warn(error);
-      } finally {
-        setLoaded(true);
-      }
+    let active = true;
+    const initialRevision = revision.current;
+    const changed = (changes, area) => {
+      if (area !== "local" || !(storageKey in changes)) return;
+      revision.current++;
+      setValue(changes[storageKey].newValue ?? defaultPreferences[storageKey]);
     };
-
-    getInitialState();
+    chrome.storage.onChanged.addListener(changed);
+    getStorage(storageKey).then((saved) => {
+      if (active && revision.current === initialRevision) setValue(saved);
+    }).catch(console.warn).finally(() => {
+      if (active) setLoaded(true);
+    });
+    return () => {
+      active = false;
+      chrome.storage.onChanged.removeListener(changed);
+    };
   }, [storageKey]);
 
-  const prevState = useRef(state);
+  const update = useCallback((nextValue) => {
+    revision.current++;
+    setValue(nextValue);
+    return setStorage({ [storageKey]: nextValue }).catch(console.warn);
+  }, [storageKey]);
 
-  useEffect(() => {
-    const updateStorage = async () => {
-      try {
-        await setStorage({ [storageKey]: state ? "on" : "off" });
-      } catch (error) {
-        console.warn(error);
-      }
-    };
+  return [value, update, loaded];
+}
 
-    if (prevState.current !== state) {
-      updateStorage();
-    }
-
-    prevState.current = state;
-  }, [storageKey, state]);
-
-  return [state, setState, loaded];
+export default function useStorageKeyState(storageKey) {
+  const [value, update, loaded] = useStorageState(storageKey);
+  const setChecked = useCallback((checked) => update(checked ? "on" : "off"), [update]);
+  return [value === "on", setChecked, loaded];
 }
 
 export function useStorageValue(storageKey) {
-  const [value, setValue] = useState(defaultPreferences[storageKey]);
-
-  useEffect(() => {
-    const getInitialState = async () => {
-      try {
-        const savedSetting = await getStorage(storageKey);
-        if (savedSetting !== undefined) {
-          setValue(savedSetting);
-        }
-      } catch (error) {
-        console.warn(error);
-      }
-    };
-
-    getInitialState();
-  }, [storageKey]);
-
-  return value;
+  return useStorageState(storageKey)[0];
 }

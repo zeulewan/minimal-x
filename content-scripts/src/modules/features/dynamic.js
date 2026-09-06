@@ -7,6 +7,7 @@
  */
 
 import {
+  allSettingsKeys, KeyExtensionStatus, KeyRecentMedia,
   KeyFollowingTimeline,
   KeyHideForYouTimeline,
   KeyHideGrokDrawer,
@@ -16,7 +17,7 @@ import {
   KeyRemoveTimelineTabs,
   KeyTrendsHomeTimeline,
 } from "../../../../storage-keys";
-import { applySidebarFeatures, sidebarSettingKeys } from "./sidebar";
+import { applySidebarFeatures } from "./sidebar";
 import changeHideViewCounts from "../options/hideViewCount";
 import { hideGrokDrawer, hideMessagesDrawer, changeNavigationButtonsLabels } from "../options/navigation";
 import { changeFollowingTimeline, changeHideForYouTimeline, changeRecentMedia, changeTimelineTabs, changeTrendsHomeTimeline, enableGrokDrawerOnGrokButtonClick } from "../options/timeline";
@@ -27,11 +28,10 @@ import { getStorage } from "../utilities/storage";
 import throttle from "../utilities/throttle";
 
 export const dynamicFeatures = {
-  general: async () => {
-    const data = await getStorage([KeyHideViewCount, KeyHideGrokDrawer]);
+  general: async (data) => {
 
     changeHideViewCounts(data[KeyHideViewCount]);
-    changeRecentMedia();
+    await changeRecentMedia(data[KeyRecentMedia]);
     hideRightSidebar();
     addSmallerSearchBarStyle();
     updateLeftSidebarPositioning();
@@ -51,27 +51,24 @@ export const dynamicFeatures = {
   },
 };
 
+let running = false;
+let pending = false;
 export const runDynamicFeatures = throttle(async () => {
-  const data = await getStorage([
-    KeyFollowingTimeline,
-    KeyHideForYouTimeline,
-    KeyTrendsHomeTimeline,
-    KeyRemoveTimelineTabs,
-    KeyHideGrokDrawer,
-    KeyHideMessagesDrawer,
-    KeyNavigationButtonsLabels,
-    ...sidebarSettingKeys,
-  ]);
-
-  if (data) {
-    dynamicFeatures.general();
+  if (running) { pending = true; return; }
+  running = true;
+  try {
+    const data = await getStorage(allSettingsKeys);
+    if (data[KeyExtensionStatus] === "off") return;
+    await dynamicFeatures.general(data);
     dynamicFeatures.timeline(data);
     dynamicFeatures.navigation(data);
     dynamicFeatures.sidebar(data);
-
-    // The Grok drawer appears dynamically, so we need to handle it here as well
-    // as in the static features module
-    hideGrokDrawer(data?.[KeyHideGrokDrawer]);
-    hideMessagesDrawer(data?.[KeyHideMessagesDrawer]);
+    hideGrokDrawer(data[KeyHideGrokDrawer]);
+    hideMessagesDrawer(data[KeyHideMessagesDrawer]);
+  } catch (error) {
+    console.error("Unable to update Minimal X features", error);
+  } finally {
+    running = false;
+    if (pending) { pending = false; runDynamicFeatures(); }
   }
 }, 50);

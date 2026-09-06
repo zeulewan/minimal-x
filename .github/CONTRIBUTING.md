@@ -1,96 +1,31 @@
 # Contributing
 
-If you have a good idea, [start a discussion](https://github.com/typefully/minimal-twitter/discussions/new?category=ideas). For bug reports and usability issues, [submit an issue](https://github.com/typefully/minimal-twitter/issues/new). We do accept PRs but note that it is more likely to be accepted with an associated discussion or issue.
+Report bugs and propose improvements in [this repository's issues](https://github.com/zeulewan/minimal-x/issues).
 
-## Development / Building / Bundling the Extension
+## Build and test
 
-First, you must have [classic yarn](https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable) installed.
-
-✨ **New**: `bundle-extension.js` now bundles and zips everything. Run `yarn && yarn bundle` at the root directory for the interactive browser picker, or use `yarn bundle:chrome`, `yarn bundle:firefox`, `yarn bundle:safari`, or `yarn bundle:all` to skip the prompt. You'll get a [bundle](../bundle) directory that looks like this:
-
-```
-📂 bundle
-└ 📁 chrome
-└ 📁 firefox
-└ 📁 safari
-└ 📄 chrome.zip
-└ 📄 firefox.zip
-└ 📄 safari.zip
-```
-
-### Popup
+Install [Yarn Classic 1.22.22](https://classic.yarnpkg.com/lang/en/docs/install/).
+From the repository root:
 
 ```sh
-cd popup
+yarn install --frozen-lockfile
+yarn build:all
+yarn test
 ```
 
-```sh
-yarn # must run yarn once first before you can build
-yarn build # to build and export Next.js app
-```
+The build installs locked dependencies, builds the Next.js popup and Rollup
+content script once, and packages Chrome and Firefox under `bundle/`.
+Use `yarn build:firefox` or `yarn build:chrome` for a single browser.
+`yarn build:safari` requires macOS and Xcode and generates
+`bundle/safari/Minimal X/Minimal X.xcodeproj`.
 
-### Content Scripts
+For development, run `yarn dev` inside `popup/` or `yarn watch` inside
+`content-scripts/`. Rebuild the browser package before loading it to pick up
+changes. See [manual installation](../MANUAL_INSTALLATION.MD).
 
-We also use [parcel](https://parceljs.org) to build the `content_scripts` for the extension.
+Selectors live in `content-scripts/src/selectors.js`. After changing them,
+run `yarn scan:build` and commit `diagnostics/scan-x.js`. The scan only reports
+matches on the current page; use actual behavior checks before removing features.
 
-```sh
-cd content-scripts
-```
-
-```sh
-yarn # must run yarn once first before you can build
-yarn build # to build the content_scripts
-yarn watch # watch for changes and build automatically
-```
-
-After you have built both `popup` and `content-scripts` you can bundle the extension for `Chrome`, `Firefox`, and `Safari`:
-
-### Bundle Script
-
-```sh
-cd .. # go back to the root directory
-```
-
-```sh
-yarn # must run yarn once first before you can bundle
-yarn bundle # interactive browser picker
-yarn bundle:chrome
-yarn bundle:firefox
-yarn bundle:safari
-yarn bundle:all
-```
-
-## Load Extension
-
-<table>
-	<tr>
-		<th>Chrome or Edge</th>
-		<th>Firefox</th>
-		<th>Safari</th>
-	</tr>
-	<tr>
-		<td width="33.33%">
-			<ol>
-				<li>Open <code>chrome://extensions</code> or <code>edge://extensions</code></li>
-        <li>Turn on the <strong>Developer mode</strong> toggle</li>
-				<li>Click on the <strong>Load unpacked</strong> button</li>
-				<li>Select the folder <code>minimal-twitter/extension</code></li>
-			</ol>
-		</td>
-		<td width="33.33%">
-			<ol>
-				<li>Open <code>about:debugging#/runtime/this-firefox</code></li>
-				<li>Click on the <strong>Load Temporary Add-on...</strong> button</li>
-				<li>Select the file <code>minimal-twitter/extension/manifest.json</code></li>
-			</ol>
-		</td>
-      <td width="33.33%">
-			<ol>
-				<li>Open <code>bundle/safari/Minimal Theme for Twitter/Minimal Theme for Twitter.xcodeproj</code>
-        </li>
-				<li>Click the Play button in Xcode ("start the active scheme")</li>
-				<li><a href="https://developer.apple.com/documentation/safariservices/safari_web_extensions/running_your_safari_web_extension#3744467">Configure Safari in macOS to run unsigned extensions</a></li>
-			</ol>
-		</td>
-	</tr>
-</table>
+See [Firefox release instructions](../AMO_SOURCE_README.md) for publishing and
+reproducible source archives.
